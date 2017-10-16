@@ -10,8 +10,8 @@ defmodule GCloudex do
   @spec get_project_id :: binary
   def get_project_id do
     :goth
-    |> Application.get_env(:json) 
-    |> Poison.decode! 
+    |> Application.get_env(:json)
+    |> Poison.decode!
     |> Map.get("project_id")
   end
 end
