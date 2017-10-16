@@ -18,7 +18,7 @@ GCloudex uses HTTPoison for the HTTP requests, Poison for JSON encoding/decoding
   1. Add gcloudex to your list of dependencies in `mix.exs`:
 
         def deps do
-          [{:gcloudex, git: "git@github.com:mgiacomini/gcloudex_storage.git"}]
+          [{:gcloudex, "~> 0.9.0"}]
         end
 
   2. Ensure gcloudex is started before your application:
