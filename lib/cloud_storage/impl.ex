@@ -4,7 +4,7 @@ defmodule GCloudex.CloudStorage.Impl do
   Wrapper for Google Cloud Storage API.
   """
   defmacro __using__(:cloud_storage) do 
-    quote do 
+    quote do
       use GCloudex.CloudStorage.Request
 
       @endpoint "storage.googleapis.com"
