@@ -11,7 +11,7 @@ defmodule GCloudex do
   def get_project_id do
     :goth
     |> Application.get_env(:json)
-    |> Poison.decode!()
+    |> Poison.decode!(%{})
     |> Map.get("project_id")
   end
 end
