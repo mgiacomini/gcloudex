@@ -23,8 +23,8 @@ defmodule GCloudex.Mixfile do
 
   defp deps do
     [
-      {:httpoison, "~> 1.0"},
-      {:goth,      "~> 0.7.0"},
+      {:httpoison, "~> 1.0", override: true},
+      {:goth,      "~> 0.8.0"},
       {:poison,    "~> 3.1"},
       {:credo,     "~> 0.8.8", only: [:dev, :test]},
       {:ex_doc,    "~> 0.16", only: [:dev]}
