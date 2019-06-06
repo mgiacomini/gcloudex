@@ -5,15 +5,16 @@ defmodule GCloudex.Mixfile do
 
   def project do
     [
-     app: :gcloudex_storage,
-     version: @version,
-     elixir: "~> 1.5",
-     description: "Google Cloud Storage for Elixir. Friendly set of wrappers for "
-                   <> "Google Cloud Storage Platform API's.",
-     build_embedded: Mix.env == :prod,
-     start_permanent: Mix.env == :prod,
-     deps: deps(),
-     package: package()
+      app: :gcloudex_storage,
+      version: @version,
+      elixir: "~> 1.5",
+      description:
+        "Google Cloud Storage for Elixir. Friendly set of wrappers for " <>
+          "Google Cloud Storage Platform API's.",
+      build_embedded: Mix.env() == :prod,
+      start_permanent: Mix.env() == :prod,
+      deps: deps(),
+      package: package()
     ]
   end
 
@@ -24,18 +25,18 @@ defmodule GCloudex.Mixfile do
   defp deps do
     [
       {:httpoison, "~> 1.0", override: true},
-      {:goth,      "~> 0.8.0"},
-      {:poison,    "~> 3.1"},
-      {:credo,     "~> 0.8.8", only: [:dev, :test]},
-      {:ex_doc,    "~> 0.16", only: [:dev]}
+      {:goth, "~> 0.8.0"},
+      {:poison, "~> 3.1"},
+      {:credo, "~> 0.8.8", only: [:dev, :test]},
+      {:ex_doc, "~> 0.16", only: [:dev]}
     ]
   end
 
   defp package do
     [
-     maintainers: ["Mauricio Giacomini Girardello"],
-     licenses: ["Apache 2.0"],
-     links: %{"GitHub" => "https://github.com/mgiacomini/gcloudex"}
+      maintainers: ["Mauricio Giacomini Girardello"],
+      licenses: ["Apache 2.0"],
+      links: %{"GitHub" => "https://github.com/mgiacomini/gcloudex"}
     ]
   end
 end
