@@ -1,5 +1,5 @@
 defmodule GCloudex.Auth do
-  alias Goth.Token, as: GoogleAuth
+  alias Goth.Token, as: Token
 
   @moduledoc """
   Provides retrieval of authentication tokens for several Google Cloud Platform
@@ -15,67 +15,38 @@ defmodule GCloudex.Auth do
   @storage_scope_read_write   "https://www.googleapis.com/auth/devstorage.read_write"
   @storage_scope_full_control "https://www.googleapis.com/auth/devstorage.full_control"
 
-  # Cloud SQL scopes
-  @sql_scope_admin            "https://www.googleapis.com/auth/sqlservice.admin"
-
-  # Compute Engine scopes
-  @compute_read_only          "https://www.googleapis.com/auth/compute.readonly"
-  @compute                    "https://www.googleapis.com/auth/compute"  
-
   @doc """
   Retrieves an authentication token for the Google Cloud Storage service.
   """
   @spec get_token_storage(atom) :: binary
-  def get_token_storage(type) do
+  def get_token_storage(type)
 
-    # Refactor this case do to receive the tuple and then return the field
-    case type do
-      :read_only ->
-        {:ok, get_token_response} =
-          GoogleAuth.for_scope @storage_scope_read_only
+  def get_token_storage(:read_only) do
+    {:ok, token_response} = Token.for_scope @storage_scope_read_only
+    Map.get(token_response, :token)
+  end
 
-        get_token_response |> Map.get(:token)
+  def get_token_storage(:read_write) do
+    {:ok, token_response} = Token.for_scope @storage_scope_read_write
+    Map.get(token_response, :token)
+  end
 
-      :read_write ->
-        {:ok, get_token_response} =
-          GoogleAuth.for_scope @storage_scope_read_write
+  def get_token_storage(:full_control) do
+    {:ok, token_response} = Token.for_scope @storage_scope_full_control
+    Map.get(token_response, :token)
+  end
 
-        get_token_response |> Map.get(:token)
+  def get_token_storage(:cs_read_only) do
+    {:ok, token_response} = Token.for_scope @cloud_scope_cs_read_only
+    Map.get(token_response, :token)
+  end
 
-      :full_control ->
-        {:ok, get_token_response} =
-          GoogleAuth.for_scope @storage_scope_full_control
+  def get_token_storage(:cs) do
+    {:ok, token_response} = Token.for_scope @cloud_scope_cs
+    Map.get(token_response, :token)
+  end
 
-        get_token_response |> Map.get(:token)
-
-      :sql_admin ->
-        {:ok, get_token_response} = 
-          GoogleAuth.for_scope @sql_scope_admin
-
-        get_token_response |> Map.get(:token)
-
-      :cs_read_only ->
-        {:ok, get_token_response} =
-          GoogleAuth.for_scope @cloud_scope_cs_read_only
-
-        get_token_response |> Map.get(:token)
-
-      :cs ->
-        {:ok, get_token_response} = GoogleAuth.for_scope @cloud_scope_cs
-
-        get_token_response |> Map.get(:token)
-
-      :compute_read_only ->
-        {:ok, get_token_response} = 
-          GoogleAuth.for_scope @compute_read_only
-
-        get_token_response |> Map.get(:token)
-
-      :compute ->
-        {:ok, get_token_response} = 
-          GoogleAuth.for_scope @compute
-
-        get_token_response |> Map.get(:token)
-    end
+  def get_token_storage(_type) do
+    raise "Invalid token type"
   end
 end

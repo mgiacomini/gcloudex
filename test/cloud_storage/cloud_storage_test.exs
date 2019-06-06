@@ -336,7 +336,7 @@ defmodule CloudStorageTest do
     new_object    = "new_object"
     source_object = "source_object"
     expected      = build_expected(
-      :put, 
+      :put,
       "#{new_bucket}.#{@endpoint}/#{new_object}",
       [{"x-goog-copy-source", source_object}],
       ""
