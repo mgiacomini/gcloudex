@@ -24,7 +24,7 @@ defmodule GCloudex.Mixfile do
 
   defp deps do
     [
-      {:tesla, "~> 1.2"},
+      {:tesla, "~> 1.3"},
       {:goth, "~> 1.0"},
       {:jason, "~> 1.1"},
       {:credo, "~> 1.0", only: [:dev, :test]},

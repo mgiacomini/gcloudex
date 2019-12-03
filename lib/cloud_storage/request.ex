@@ -36,7 +36,7 @@ defmodule GCloudex.CloudStorage.Request do
       Sends an HTTP request without any query parameters.
       """
       @spec request(atom, binary, list(tuple), binary) :: HTTPResponse.t()
-      def request(verb, bucket, headers \\ [], body \\ "") do
+      def request(verb, bucket, headers \\ [], body \\ %{}) do
         do_request(
           verb,
           bucket <> "." <> @endpoint,
@@ -50,7 +50,7 @@ defmodule GCloudex.CloudStorage.Request do
       Sends an HTTP request with the specified query parameters.
       """
       @spec request_query(atom, binary, list(tuple), binary, binary) :: HTTPResponse.t()
-      def request_query(verb, bucket, headers \\ [], body \\ "", parameters) do
+      def request_query(verb, bucket, headers \\ [], body \\ %{}, parameters) do
         do_request(
           verb,
           bucket <> "." <> @endpoint <> "/" <> parameters,
@@ -60,8 +60,17 @@ defmodule GCloudex.CloudStorage.Request do
         )
       end
 
-      defp do_request(method, url, body \\ "", headers \\ [], options \\ []) do
+      defp do_request(method, url, body \\ %{}, headers \\ [], options \\ [])
+           when method not in [:get, :head] do
         Tesla.request(method: method, url: url, body: body, headers: headers, opts: options)
+      end
+
+      defp do_request(:head, url, _body, headers, options) do
+        Tesla.request(method: :head, url: url, headers: headers, opts: options)
+      end
+
+      defp do_request(:get, url, _body, headers, options) do
+        Tesla.request(method: :get, url: url, headers: headers, opts: options)
       end
 
       defoverridable request_service: 0,
