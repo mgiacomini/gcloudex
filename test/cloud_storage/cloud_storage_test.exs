@@ -319,8 +319,8 @@ defmodule CloudStorageTest do
   ##################
 
   test "put_object/2 (no path for the file)" do
-    filepath = __DIR__ <> "README.md"
-    body = {:file, filepath}
+    filepath = "#{__DIR__}/../../README.md"
+    {:ok, body} = File.read(filepath)
     bucket = "bucket"
     expected = build_expected(:put, "#{bucket}.#{@endpoint}/#{filepath}", [], body)
 
@@ -328,9 +328,9 @@ defmodule CloudStorageTest do
   end
 
   test "put_object/3 (with path for the file)" do
-    filepath = __DIR__ <> "README.md"
+    filepath = "#{__DIR__}/../../README.md"
     bucketpath = "folder_1/folder_2"
-    body = {:file, filepath}
+    {:ok, body} = File.read(filepath)
     bucket = "bucket"
     expected = build_expected(:put, "#{bucket}.#{@endpoint}/#{bucketpath}", [], body)
 

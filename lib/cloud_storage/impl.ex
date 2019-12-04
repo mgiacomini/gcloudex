@@ -354,7 +354,7 @@ defmodule GCloudex.CloudStorage.Impl do
       @spec put_object(bucket :: binary, filepath :: binary, bucket_path :: binary) ::
               HTTPResponse.t()
       def put_object(bucket, filepath, bucket_path \\ :empty) do
-        body = {:file, filepath}
+        {:ok, body} = File.read(filepath)
 
         case bucket_path do
           :empty -> request_query(:put, bucket, [], body, filepath)
