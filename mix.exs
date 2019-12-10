@@ -19,7 +19,7 @@ defmodule GCloudex.Mixfile do
   end
 
   def application do
-    [applications: [:logger, :httpoison, :goth]]
+    [applications: [:logger, :tesla, :goth]]
   end
 
   defp deps do
